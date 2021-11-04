@@ -27,7 +27,9 @@ class App {
     this.application.post('/skill/meal', (req: Request, res: Response, next: NextFunction) => {
       const YMD = req.body['action']['detailParams']['user_select_date']['origin'].split('-').join('');
       if (YMD) {
-        axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`)
+        axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`, {
+          headers: { woongdo_client_token: process.env.adminToken }
+        })
           .then(response => {
             return res.json({
               'version': '2.0',
@@ -69,7 +71,9 @@ class App {
       const set_date = req.body['action']['params']['set_day'];
 
       if (set_grade || set_class) {
-        axios.get(`https://woongdo.kro.kr/api/v2/timetable?grade=${set_grade}&class=${set_class}&date=${encodeURI(set_date)}`)
+        axios.get(`https://woongdo.kro.kr/api/v2/timetable?grade=${set_grade}&class=${set_class}&date=${encodeURI(set_date)}`, {
+          headers: { woongdo_client_token: process.env.adminToken }
+        })
           .then(response => {
             let str: string = '';
             for (let i = 1; i <= response.data['length']; ++i)
