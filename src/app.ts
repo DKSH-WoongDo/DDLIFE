@@ -1,10 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { quickReplies } from './quickReplies';
-
-dotenv.config();
 
 class App {
   public application: express.Application;
