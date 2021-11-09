@@ -33,7 +33,8 @@ class App {
       const YMD = req.body['action']['detailParams']['user_select_date']['origin'].split('-').join('');
       if (YMD) {
         try {
-          let { fetchMealMenu }: { fetchMealMenu: mealDataType } = await axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`);
+          const fetchMealMenu = await axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`);
+          const decodeData: mealDataType = fetchMealMenu.data;
 
           return res.json({
             'version': '2.0',
@@ -42,7 +43,7 @@ class App {
                 {
                   'carousel': {
                     'type': 'basicCard',
-                    'items': fetchMealMenu.mealData
+                    'items': decodeData.mealData
                   }
                 }
               ],
@@ -83,11 +84,12 @@ class App {
 
       if (set_grade || set_class) {
         try {
-          let { fetchTimeTable }: { fetchTimeTable: TimeTableDataType } = await axios.get(`https://woongdo.kro.kr/api/v2/timetable?setGrade=${set_grade}&setClass=${set_class}&setDate=${encodeURI(set_date)}`)
+          const fetchTimeTable = await axios.get(`https://woongdo.kro.kr/api/v2/timetable?setGrade=${set_grade}&setClass=${set_class}&setDate=${encodeURI(set_date)}`);
+          const decodeData: TimeTableDataType = fetchTimeTable.data;
           let str: string = '';
 
-          for (let i = 1; i <= fetchTimeTable.length; ++i)
-            str += `${i}교시 : ${fetchTimeTable.timeTable[i - 1]}\n`;
+          for (let i = 1; i <= decodeData.length; ++i)
+            str += `${i}교시 : ${decodeData.timeTable[i - 1]}\n`;
 
           return res.json({
             'version': '2.0',
