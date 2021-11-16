@@ -15,6 +15,7 @@ class App {
   private setMiddleWare() {
     this.application.use(cors());
     this.application.use(express.json());
+    this.application.use(express.urlencoded({ extended: false }));
   }
 
   private getPage() {
@@ -27,14 +28,28 @@ class App {
         code: string,
         message: string,
         length: number,
-        mealData: Array<{ title: string, description: string }>
+        mealData: Array<{ title: string, menu: Array<string> }>
       }
 
-      const YMD = req.body['action']['detailParams']['user_select_date']['origin'].split('-').join('');
+      const YMD = req.body.split('-').join('');
       if (YMD) {
         try {
           const fetchMealMenu = await axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`);
           const decodeData: mealDataType = fetchMealMenu.data;
+          let returnValue: Array<{ title: string; description: string; }> = [];
+
+          if (decodeData.isError) {
+            throw new Error('요청 오류');
+          }
+
+          decodeData.mealData.forEach((meal) => {
+            let description = '';
+            meal.menu.forEach((element) => {
+              description += ''.concat(element, '\n');
+            });
+
+            returnValue.push({ title: meal.title, description: description });
+          });
 
           return res.json({
             'version': '2.0',
@@ -43,7 +58,7 @@ class App {
                 {
                   'carousel': {
                     'type': 'basicCard',
-                    'items': decodeData.mealData
+                    'items': returnValue
                   }
                 }
               ],
@@ -80,12 +95,17 @@ class App {
         timeTable: Array<string>
       }
 
-      const { set_grade, set_class, set_date } = req.body['action']['params'];
+      const { set_grade, set_class, set_date } = req.body;
 
       if (set_grade || set_class) {
         try {
           const fetchTimeTable = await axios.get(`https://woongdo.kro.kr/api/v2/timetable?setGrade=${set_grade}&setClass=${set_class}&setDate=${encodeURI(set_date)}`);
           const decodeData: TimeTableDataType = fetchTimeTable.data;
+
+          if (decodeData.isError) {
+            throw new Error('요청 오류');
+          }
+
           let str: string = '';
 
           for (let i = 1; i <= decodeData.length; ++i)
