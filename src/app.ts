@@ -31,12 +31,12 @@ class App {
         mealData: Array<{ title: string, menu: Array<string> }>
       }
 
-      const YMD = req.body.split('-').join('');
+      const YMD = req.body['action']['detailParams']['user_select_date']['origin'];
       if (YMD) {
         try {
           const fetchMealMenu = await axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`);
           const decodeData: mealDataType = fetchMealMenu.data;
-          let returnValue: Array<{ title: string; description: string; }> = [];
+          let returnValue: Array<{ title: string, description: string; }> = [];
 
           if (decodeData.isError) {
             throw new Error('요청 오류');
@@ -95,7 +95,7 @@ class App {
         timeTable: Array<string>
       }
 
-      const { set_grade, set_class, set_date } = req.body;
+      const { set_grade, set_class, set_date } = req.body['action']['params'];
 
       if (set_grade || set_class) {
         try {
