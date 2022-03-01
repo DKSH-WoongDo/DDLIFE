@@ -34,7 +34,7 @@ class App {
       const YMD = req.body['action']['detailParams']['user_select_date']['origin'];
       if (YMD) {
         try {
-          const fetchMealMenu = await axios.get(`https://woongdo.kro.kr/api/v2/meal?YMD=${YMD}`);
+          const fetchMealMenu = await axios.get(`https://woongdo.kro.kr/api/meal?YMD=${YMD}`);
           const decodeData: mealDataType = fetchMealMenu.data;
           let returnValue: Array<{ title: string, description: string; }> = [];
 
@@ -99,7 +99,7 @@ class App {
 
       if (set_grade || set_class) {
         try {
-          const fetchTimeTable = await axios.get(`https://woongdo.kro.kr/api/v2/timetable?setGrade=${set_grade}&setClass=${set_class}&setDate=${encodeURI(set_date)}`);
+          const fetchTimeTable = await axios.get(`https://woongdo.kro.kr/api/timetable?setGrade=${set_grade}&setClass=${set_class}&setDate=${encodeURI(set_date)}`);
           const decodeData: TimeTableDataType = fetchTimeTable.data;
 
           if (decodeData.isError) {
