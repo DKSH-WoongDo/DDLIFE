@@ -97,7 +97,7 @@ class App {
 
       const { set_grade, set_class, set_date } = req.body['action']['params'];
 
-      if (set_grade || set_class) {
+      if (set_grade && set_class && set_date) {
         try {
           const fetchTimeTable = await axios.get(`https://woongdo.kro.kr/api/timetable?setGrade=${set_grade}&setClass=${set_class}&setDate=${encodeURI(set_date)}`);
           const decodeData: TimeTableDataType = fetchTimeTable.data;
@@ -106,10 +106,9 @@ class App {
             throw new Error('요청 오류');
           }
 
-          let str: string = '';
-
-          for (let i = 1; i <= decodeData.length; ++i)
-            str += `${i}교시 : ${decodeData.timeTable[i - 1]}\n`;
+          const str: string = decodeData.timeTable.reduce((pv: string, cv: string, idx: number) => {
+            return (`${pv}\n${idx + 1}교시: ${cv}`)
+          }, '');
 
           return res.json({
             'version': '2.0',
