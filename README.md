@@ -13,8 +13,7 @@
 
 <h1 style="font-weight:600">Bug report / FeedBack</h1>
 
-> ### woongdo@protonmail.com
-<p>서비스를 이용하다가 생긴 버그나 추가했으면 하는 기능들은 위에 메일로 보내주시거나, 이슈를 남겨주세요.</p>
+<p>서비스를 이용하다가 생긴 버그나 추가했으면 하는 기능들은 이슈를 남겨주세요.</p>
 
 <h1 style="font-weight:600">Project Stack</h1>
 <ul>
@@ -30,14 +29,7 @@
 
 <h1 style="font-weight:600">API</h1>
 <p>'웅도'는 본교 학우분들을 위해 다양한 API를 공식적으로 지원합니다.</p>
-<a href="https://github.com/DKSH-WoongDo/Introduce-Woongdo/blob/main/docs/api/README.md">자세한 사항은 API 문서를 확인해주세요.</a>
-
-<h1 style="font-weight:600">Recruit</h1>
-
-> ### woongdo@protonmail.com
-<p>본교에 재학 중인 학우 분들 중, 웅도 개발팀에 합류하고 싶으신 분들은 위에 메일로 자신의 이름과 학번, 포트폴리오를 첨부하여 보내주세요.
-</p>
-<p>웅도 개발팀은 인재분들을 항상 기다리고 있습니다.</p>
+<a href="https://github.com/DKSH-WoongDo/Woongdo-API">자세한 사항은 API 문서를 확인해주세요.</a>
 
 <hr />
 <div align="center">
