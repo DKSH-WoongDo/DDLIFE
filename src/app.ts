@@ -95,7 +95,11 @@ class App {
         timeTable: Array<string>
       }
 
-      const { set_grade, set_class, set_date } = req.body['action']['params'];
+      let { set_grade, set_class, set_date } = req.body['action']['params'];
+      const numberRegex: RegExp = new RegExp('[0-9]')
+
+      set_grade = set_grade.match(numberRegex)[0]
+      set_class = set_class.match(numberRegex)[0]
 
       if (set_grade && set_class && set_date) {
         try {
